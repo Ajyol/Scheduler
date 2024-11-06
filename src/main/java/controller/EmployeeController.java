@@ -10,8 +10,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class EmployeeController {
-
-    private final IEmployeeService context;
+    private IEmployeeService context;
 
     @Autowired
     public EmployeeController(IEmployeeService context) {
