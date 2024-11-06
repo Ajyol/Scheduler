@@ -8,7 +8,7 @@ public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long employeeId;
+    private int employeeId;
 
     private String firstName;
     private String lastName;
@@ -17,15 +17,15 @@ public class Employee {
     private String address;
     private LocalDate hireDate;
 
-    private Long positionId;
-    private Long departmentId;
+    private int positionId;
+    private int departmentId;
 
 
-    public Long getEmployeeId() {
+    public int getEmployeeId() {
         return employeeId;
     }
 
-    public void setEmployeeId(Long employeeId) {
+    public void setEmployeeId(int employeeId) {
         this.employeeId = employeeId;
     }
 
@@ -77,19 +77,19 @@ public class Employee {
         this.hireDate = hireDate;
     }
 
-    public Long getPositionId() {
+    public int getPositionId() {
         return positionId;
     }
 
-    public void setPositionId(Long positionId) {
+    public void setPositionId(int positionId) {
         this.positionId = positionId;
     }
 
-    public Long getDepartmentId() {
+    public int getDepartmentId() {
         return departmentId;
     }
 
-    public void setDepartmentId(Long departmentId) {
+    public void setDepartmentId(int departmentId) {
         this.departmentId = departmentId;
     }
 }
