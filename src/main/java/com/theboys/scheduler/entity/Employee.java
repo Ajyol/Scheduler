@@ -53,13 +53,14 @@ public class Employee {
     @Column(name = "hire_date", nullable = false)
     private LocalDate hireDate;
 
-    @NotNull(message = "Position ID is mandatory")
-    @Column(name = "position_id", nullable = false)
-    private int positionId;
+    // Relationship with Position and Department entities
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "position_id", nullable = false)
+    private Position position;
 
-    @NotNull(message = "Department ID is mandatory")
-    @Column(name = "department_id", nullable = false)
-    private int departmentId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "department_id", nullable = false)
+    private Department department;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)

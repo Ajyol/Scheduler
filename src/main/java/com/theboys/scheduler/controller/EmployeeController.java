@@ -1,8 +1,10 @@
 package com.theboys.scheduler.controller;
 
-import com.theboys.scheduler.entity.Employee;
-import com.theboys.scheduler.service.IEmployeeService;
+import com.theboys.scheduler.dto.EmployeeDto;
+import com.theboys.scheduler.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,48 +12,55 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class EmployeeController {
-    private IEmployeeService context;
+
+    private final EmployeeService employeeService;
 
     @Autowired
-    public EmployeeController(IEmployeeService context) {
-        this.context = context;
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
     }
 
+    // Get all employees
     @GetMapping("/employees")
-    public List<Employee> findAll() {
-        return context.findAll();
+    public List<EmployeeDto> findAllEmployees() {
+        return employeeService.findAllEmployees();
     }
 
+    // Get a specific employee by ID
     @GetMapping("/employees/{employeeId}")
-    public Employee getEmployee(@PathVariable int employeeId) {
-        Employee theEmployee = context.findById(employeeId);
-
-        if (theEmployee == null) {
-            throw new RuntimeException("Employee not found - " + employeeId);
+    public ResponseEntity<EmployeeDto> getEmployeeById(@PathVariable int employeeId) {
+        try {
+            EmployeeDto employeeDto = employeeService.findEmployeeById(employeeId);
+            return new ResponseEntity<>(employeeDto, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
-        return theEmployee;
     }
 
+    // Add a new employee
     @PostMapping("/employees")
-    public Employee addEmployee(@RequestBody Employee theEmployee) {
-        theEmployee.setEmployeeId(0);
-        return context.save(theEmployee);
+    public ResponseEntity<EmployeeDto> addEmployee(@RequestBody EmployeeDto employeeDto) {
+        EmployeeDto savedEmployee = employeeService.saveEmployee(employeeDto);
+        return new ResponseEntity<>(savedEmployee, HttpStatus.CREATED);
     }
 
+    // Update an existing employee
     @PutMapping("/employees")
-    public Employee updateEmployee(@RequestBody Employee theEmployee) {
-        return context.save(theEmployee);
+    public ResponseEntity<EmployeeDto> updateEmployee(@RequestBody EmployeeDto employeeDto) {
+        EmployeeDto updatedEmployee = employeeService.saveEmployee(employeeDto);
+        return new ResponseEntity<>(updatedEmployee, HttpStatus.OK);
     }
 
+    // Delete an employee
     @DeleteMapping("/employees/{employeeId}")
-    public String deleteEmployee(@PathVariable int employeeId) {
-        Employee theEmployee = context.findById(employeeId);
-
-        if (theEmployee == null) {
-            throw new RuntimeException("Employee not found - " + employeeId);
+    public ResponseEntity<String> deleteEmployee(@PathVariable int employeeId) {
+        try {
+            EmployeeDto employeeDto = employeeService.findEmployeeById(employeeId);
+            // Call to delete the employee from the repository (you might need to implement this logic in your service)
+            employeeService.deleteEmployee(employeeId);
+            return new ResponseEntity<>("Employee deleted successfully", HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>("Employee not found", HttpStatus.NOT_FOUND);
         }
-
-        context.deleteById(employeeId);
-        return "Deleted employee id - " + employeeId;
     }
 }
