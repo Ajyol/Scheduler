@@ -1,6 +1,6 @@
-package service;
+package com.theboys.scheduler.service;
 
-import entity.Employee;
+import com.theboys.scheduler.entity.Employee;
 
 import java.util.List;
 
