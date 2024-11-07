@@ -56,7 +56,6 @@ public class EmployeeController {
     public ResponseEntity<String> deleteEmployee(@PathVariable int employeeId) {
         try {
             EmployeeDto employeeDto = employeeService.findEmployeeById(employeeId);
-            // Call to delete the employee from the repository (you might need to implement this logic in your service)
             employeeService.deleteEmployee(employeeId);
             return new ResponseEntity<>("Employee deleted successfully", HttpStatus.OK);
         } catch (RuntimeException e) {
