@@ -1,9 +1,9 @@
-package controller;
+package com.theboys.scheduler.controller;
 
-import entity.Employee;
+import com.theboys.scheduler.entity.Employee;
+import com.theboys.scheduler.service.IEmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import service.IEmployeeService;
 
 import java.util.List;
 

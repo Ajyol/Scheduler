@@ -1,4 +1,4 @@
-package dto;
+package com.theboys.scheduler.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

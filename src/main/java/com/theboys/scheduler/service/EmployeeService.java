@@ -1,7 +1,7 @@
-package service;
+package com.theboys.scheduler.service;
 
-import dao.EmployeeRepository;
-import entity.Employee;
+import com.theboys.scheduler.dao.EmployeeRepository;
+import com.theboys.scheduler.entity.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
