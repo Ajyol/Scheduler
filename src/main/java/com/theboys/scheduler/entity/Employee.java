@@ -26,12 +26,12 @@ public class Employee {
     private int employeeId;
 
     @NotBlank(message = "First name is mandatory")
-    @Size(max = 90, message = "First name can be up to 50 characters")
+    @Size(max = 100, message = "First name can be up to 100 characters")
     @Column(name = "first_name", nullable = false)
     private String firstName;
 
     @NotBlank(message = "Last name is mandatory")
-    @Size(max = 90, message = "Last name can be up to 50 characters")
+    @Size(max = 100, message = "Last name can be up to 100 characters")
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
@@ -61,14 +61,12 @@ public class Employee {
     @Column(name = "department_id", nullable = false)
     private int departmentId;
 
-    // Example of a potential ManyToOne relationship (if Position and Department are other entities)
-    // Uncomment if these entities exist in your system and you wish to map them.
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private EmployeeStatus status;
 
-    // @ManyToOne(fetch = FetchType.LAZY)
-    // @JoinColumn(name = "position_id", insertable = false, updatable = false)
-    // private Position position;
-
-    // @ManyToOne(fetch = FetchType.LAZY)
-    // @JoinColumn(name = "department_id", insertable = false, updatable = false)
-    // private Department department;
+    // Enum to represent status
+    public enum EmployeeStatus {
+        ACTIVE, INACTIVE, TERMINATED
+    }
 }
