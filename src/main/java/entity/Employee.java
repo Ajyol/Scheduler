@@ -1,95 +1,74 @@
 package entity;
+
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDate;
 
+@Data
 @Entity
-@Table(name = "Employees")
+@Table(name = "employees")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "employee_id")
     private int employeeId;
 
+    @NotBlank(message = "First name is mandatory")
+    @Size(max = 90, message = "First name can be up to 50 characters")
+    @Column(name = "first_name", nullable = false)
     private String firstName;
+
+    @NotBlank(message = "Last name is mandatory")
+    @Size(max = 90, message = "Last name can be up to 50 characters")
+    @Column(name = "last_name", nullable = false)
     private String lastName;
+
+    @NotBlank(message = "Email is mandatory")
+    @Email(message = "Email should be valid")
+    @Size(max = 100, message = "Email can be up to 100 characters")
+    @Column(unique = true, nullable = false)
     private String email;
+
+    @Size(max = 20, message = "Phone number can be up to 20 characters")
+    @Column(name = "phone_number")
     private String phoneNumber;
+
+    @Size(max = 150, message = "Address can be up to 150 characters")
+    @Column(name = "address")
     private String address;
+
+    @NotNull(message = "Hire date is mandatory")
+    @Column(name = "hire_date", nullable = false)
     private LocalDate hireDate;
 
+    @NotNull(message = "Position ID is mandatory")
+    @Column(name = "position_id", nullable = false)
     private int positionId;
+
+    @NotNull(message = "Department ID is mandatory")
+    @Column(name = "department_id", nullable = false)
     private int departmentId;
 
+    // Example of a potential ManyToOne relationship (if Position and Department are other entities)
+    // Uncomment if these entities exist in your system and you wish to map them.
 
-    public int getEmployeeId() {
-        return employeeId;
-    }
+    // @ManyToOne(fetch = FetchType.LAZY)
+    // @JoinColumn(name = "position_id", insertable = false, updatable = false)
+    // private Position position;
 
-    public void setEmployeeId(int employeeId) {
-        this.employeeId = employeeId;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public LocalDate getHireDate() {
-        return hireDate;
-    }
-
-    public void setHireDate(LocalDate hireDate) {
-        this.hireDate = hireDate;
-    }
-
-    public int getPositionId() {
-        return positionId;
-    }
-
-    public void setPositionId(int positionId) {
-        this.positionId = positionId;
-    }
-
-    public int getDepartmentId() {
-        return departmentId;
-    }
-
-    public void setDepartmentId(int departmentId) {
-        this.departmentId = departmentId;
-    }
+    // @ManyToOne(fetch = FetchType.LAZY)
+    // @JoinColumn(name = "department_id", insertable = false, updatable = false)
+    // private Department department;
 }

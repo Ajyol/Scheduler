@@ -3,17 +3,19 @@ package service;
 import dao.EmployeeRepository;
 import entity.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-public class EmployeeService implements IEmployeeService{
+@Service
+public class EmployeeService implements IEmployeeService {
 
-    private EmployeeRepository context;
+    private final EmployeeRepository context;
 
     @Autowired
-    public EmployeeService(EmployeeRepository _context) {
-        context = _context;
+    public EmployeeService(EmployeeRepository context) {
+        this.context = context;
     }
 
     @Override
@@ -23,16 +25,8 @@ public class EmployeeService implements IEmployeeService{
 
     @Override
     public Employee findById(int theId) {
-        Optional<Employee> result = context.findById(theId);
-        Employee theEmployee = null;
-
-        if (result.isPresent()) {
-            theEmployee = result.get();
-        } else {
-            throw new RuntimeException("Invalid ID: " + theId);
-        }
-
-        return theEmployee;
+        Optional<Employee> result = context.findById((long) theId);
+        return result.orElseThrow(() -> new RuntimeException("Invalid ID: " + theId));
     }
 
     @Override
@@ -42,6 +36,6 @@ public class EmployeeService implements IEmployeeService{
 
     @Override
     public void deleteById(int theId) {
-        context.deleteById(theId);
+        context.deleteById((long) theId);
     }
 }
