@@ -11,8 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-public class AttendanceController
-{
+public class AttendanceController {
     private final AttendanceService attendanceService;
 
     @Autowired
