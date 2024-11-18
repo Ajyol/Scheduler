@@ -10,6 +10,10 @@ import java.util.stream.Collectors;
 @Component
 public class EntityDtoMapper {
 
+    // -----------------------------------------------
+    // Employee Mappings
+    // -----------------------------------------------
+
     // Employee entity to Employee DTO (basic information)
     public EmployeeDto mapEmployeeToDtoBasic(Employee employee) {
         EmployeeDto employeeDto = new EmployeeDto();
@@ -37,18 +41,52 @@ public class EntityDtoMapper {
     public EmployeeDto mapEmployeeToDtoWithPositionAndDepartment(Employee employee) {
         EmployeeDto employeeDto = mapEmployeeToDtoBasic(employee);
 
-        // Add Position details if available
         if (employee.getPosition() != null) {
             employeeDto.setPositionName(employee.getPosition().getPositionTitle());
         }
-
-        // Add Department details if available
         if (employee.getDepartment() != null) {
             employeeDto.setDepartmentName(employee.getDepartment().getDepartmentName());
         }
 
         return employeeDto;
     }
+
+    // Employee DTO to Employee entity
+    public Employee mapEmployeeDtoToEntity(EmployeeDto employeeDto) {
+        Employee employee = new Employee();
+        employee.setEmployeeId(employeeDto.getEmployeeId().intValue());
+        employee.setFirstName(employeeDto.getFirstName());
+        employee.setLastName(employeeDto.getLastName());
+        employee.setEmail(employeeDto.getEmail());
+        employee.setPhoneNumber(employeeDto.getPhoneNumber());
+        employee.setAddress(employeeDto.getAddress());
+        employee.setHireDate(employeeDto.getHireDate());
+
+        if (employeeDto.getPositionId() != null) {
+            Position position = new Position();
+            position.setPositionId(employeeDto.getPositionId().intValue());
+            employee.setPosition(position);
+        }
+        if (employeeDto.getDepartmentId() != null) {
+            Department department = new Department();
+            department.setDepartmentId(employeeDto.getDepartmentId().intValue());
+            employee.setDepartment(department);
+        }
+
+        employee.setStatus(Employee.EmployeeStatus.valueOf(employeeDto.getStatus().name()));
+        return employee;
+    }
+
+    // Employee DTO list
+    public List<EmployeeDto> mapEmployeesToDtoList(List<Employee> employees) {
+        return employees.stream()
+                .map(this::mapEmployeeToDtoWithPositionAndDepartment)
+                .collect(Collectors.toList());
+    }
+
+    // -----------------------------------------------
+    // Position Mappings
+    // -----------------------------------------------
 
     // Position entity to Position DTO
     public PositionDto mapPositionToDto(Position position) {
@@ -58,6 +96,25 @@ public class EntityDtoMapper {
         return positionDto;
     }
 
+    // Position DTO to Position entity
+    public Position mapPositionDtoToEntity(PositionDto positionDto) {
+        Position position = new Position();
+        position.setPositionId(positionDto.getPositionId());
+        position.setPositionTitle(positionDto.getPositionTitle());
+        return position;
+    }
+
+    // Position DTO list
+    public List<PositionDto> mapPositionsToDtoList(List<Position> positions) {
+        return positions.stream()
+                .map(this::mapPositionToDto)
+                .collect(Collectors.toList());
+    }
+
+    // -----------------------------------------------
+    // Department Mappings
+    // -----------------------------------------------
+
     // Department entity to Department DTO
     public DepartmentDto mapDepartmentToDto(Department department) {
         DepartmentDto departmentDto = new DepartmentDto();
@@ -65,6 +122,25 @@ public class EntityDtoMapper {
         departmentDto.setDepartmentName(department.getDepartmentName());
         return departmentDto;
     }
+
+    // Department DTO to Department entity
+    public Department mapDepartmentDtoToEntity(DepartmentDto departmentDto) {
+        Department department = new Department();
+        department.setDepartmentId(departmentDto.getDepartmentId());
+        department.setDepartmentName(departmentDto.getDepartmentName());
+        return department;
+    }
+
+    // Department DTO list
+    public List<DepartmentDto> mapDepartmentsToDtoList(List<Department> departments) {
+        return departments.stream()
+                .map(this::mapDepartmentToDto)
+                .collect(Collectors.toList());
+    }
+
+    // -----------------------------------------------
+    // EmployeeSchedule Mappings
+    // -----------------------------------------------
 
     // EmployeeSchedule entity to EmployeeSchedule DTO
     public EmployeeScheduleDto mapEmployeeScheduleToDto(EmployeeSchedule employeeSchedule) {
@@ -77,85 +153,7 @@ public class EntityDtoMapper {
         return employeeScheduleDto;
     }
 
-    // Employee DTO list
-    public List<EmployeeDto> mapEmployeesToDtoList(List<Employee> employees) {
-        return employees.stream()
-                .map(this::mapEmployeeToDtoWithPositionAndDepartment)
-                .collect(Collectors.toList());
-    }
-    // Employee DTO list
-    public List<AttendanceDto> mapAttendanceToDtoList(List<Attendance> attendances) {
-        return attendances.stream()
-                .map(this::mapAttendanceToDto)
-                .collect(Collectors.toList());
-    }
-
-    // Position DTO list
-    public List<PositionDto> mapPositionsToDtoList(List<Position> positions) {
-        return positions.stream()
-                .map(this::mapPositionToDto)
-                .collect(Collectors.toList());
-    }
-
-    // Department DTO list
-    public List<DepartmentDto> mapDepartmentsToDtoList(List<Department> departments) {
-        return departments.stream()
-                .map(this::mapDepartmentToDto)
-                .collect(Collectors.toList());
-    }
-
-    // EmployeeSchedule DTO list
-    public List<EmployeeScheduleDto> mapEmployeeSchedulesToDtoList(List<EmployeeSchedule> employeeSchedules) {
-        return employeeSchedules.stream()
-                .map(this::mapEmployeeScheduleToDto)
-                .collect(Collectors.toList());
-    }
-
-    // Map Employee DTO to Employee entity
-    public Employee mapEmployeeDtoToEntity(EmployeeDto employeeDto) {
-        Employee employee = new Employee();
-        employee.setEmployeeId(employeeDto.getEmployeeId().intValue());
-        employee.setFirstName(employeeDto.getFirstName());
-        employee.setLastName(employeeDto.getLastName());
-        employee.setEmail(employeeDto.getEmail());
-        employee.setPhoneNumber(employeeDto.getPhoneNumber());
-        employee.setAddress(employeeDto.getAddress());
-        employee.setHireDate(employeeDto.getHireDate());
-
-        // Handle Position and Department mappings
-        if (employeeDto.getPositionId() != null) {
-            Position position = new Position();
-            position.setPositionId(employeeDto.getPositionId().intValue());
-            employee.setPosition(position);
-        }
-
-        if (employeeDto.getDepartmentId() != null) {
-            Department department = new Department();
-            department.setDepartmentId(employeeDto.getDepartmentId().intValue());
-            employee.setDepartment(department);
-        }
-
-        employee.setStatus(Employee.EmployeeStatus.valueOf(employeeDto.getStatus().name()));
-        return employee;
-    }
-
-    // Map Position DTO to Position entity
-    public Position mapPositionDtoToEntity(PositionDto positionDto) {
-        Position position = new Position();
-        position.setPositionId(positionDto.getPositionId());
-        position.setPositionTitle(positionDto.getPositionTitle());
-        return position;
-    }
-
-    // Map Department DTO to Department entity
-    public Department mapDepartmentDtoToEntity(DepartmentDto departmentDto) {
-        Department department = new Department();
-        department.setDepartmentId(departmentDto.getDepartmentId());
-        department.setDepartmentName(departmentDto.getDepartmentName());
-        return department;
-    }
-
-    // Map EmployeeSchedule DTO to EmployeeSchedule entity
+    // EmployeeSchedule DTO to EmployeeSchedule entity
     public EmployeeSchedule mapEmployeeScheduleDtoToEntity(EmployeeScheduleDto employeeScheduleDto) {
         EmployeeSchedule employeeSchedule = new EmployeeSchedule();
         employeeSchedule.setId(employeeScheduleDto.getId());
@@ -166,6 +164,17 @@ public class EntityDtoMapper {
         return employeeSchedule;
     }
 
+    // EmployeeSchedule DTO list
+    public List<EmployeeScheduleDto> mapEmployeeSchedulesToDtoList(List<EmployeeSchedule> employeeSchedules) {
+        return employeeSchedules.stream()
+                .map(this::mapEmployeeScheduleToDto)
+                .collect(Collectors.toList());
+    }
+
+    // -----------------------------------------------
+    // Attendance Mappings
+    // -----------------------------------------------
+
     // Attendance entity to Attendance DTO
     public AttendanceDto mapAttendanceToDto(Attendance attendance) {
         AttendanceDto dto = new AttendanceDto();
@@ -174,12 +183,9 @@ public class EntityDtoMapper {
         dto.setClockOut(attendance.getClockOut());
         dto.setStatus(AttendanceDto.AttendanceStatus.valueOf(attendance.getStatus().name()));
 
-        // Map associated Employee
         if (attendance.getEmployee() != null) {
             dto.setEmployee(mapEmployeeToDtoBasic(attendance.getEmployee()));
         }
-
-        // Map associated Schedule
         if (attendance.getSchedule() != null) {
             ScheduleDto scheduleDto = new ScheduleDto();
             scheduleDto.setScheduleId(attendance.getSchedule().getScheduleId());
@@ -199,14 +205,11 @@ public class EntityDtoMapper {
         attendance.setClockOut(dto.getClockOut());
         attendance.setStatus(Attendance.AttendanceStatus.valueOf(dto.getStatus().name()));
 
-        // Map associated Employee
         if (dto.getEmployee() != null) {
             Employee employee = new Employee();
             employee.setEmployeeId(dto.getEmployee().getEmployeeId().intValue());
             attendance.setEmployee(employee);
         }
-
-        // Map associated Schedule
         if (dto.getSchedule() != null) {
             Schedule schedule = new Schedule();
             schedule.setScheduleId(dto.getSchedule().getScheduleId());
@@ -216,4 +219,10 @@ public class EntityDtoMapper {
         return attendance;
     }
 
+    // Attendance DTO list
+    public List<AttendanceDto> mapAttendanceToDtoList(List<Attendance> attendances) {
+        return attendances.stream()
+                .map(this::mapAttendanceToDto)
+                .collect(Collectors.toList());
+    }
 }
