@@ -29,12 +29,8 @@ public class EmployeeController {
     // Get a specific employee by ID
     @GetMapping("/employees/{employeeId}")
     public ResponseEntity<EmployeeDto> getEmployeeById(@PathVariable int employeeId) {
-        try {
-            EmployeeDto employeeDto = employeeService.findEmployeeById(employeeId);
-            return new ResponseEntity<>(employeeDto, HttpStatus.OK);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
+        EmployeeDto employeeDto = employeeService.findEmployeeById(employeeId);
+        return new ResponseEntity<>(employeeDto, HttpStatus.OK);
     }
 
     // Add a new employee
@@ -54,12 +50,7 @@ public class EmployeeController {
     // Delete an employee
     @DeleteMapping("/employees/{employeeId}")
     public ResponseEntity<String> deleteEmployee(@PathVariable int employeeId) {
-        try {
-            EmployeeDto employeeDto = employeeService.findEmployeeById(employeeId);
-            employeeService.deleteEmployee(employeeId);
-            return new ResponseEntity<>("Employee deleted successfully", HttpStatus.OK);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>("Employee not found", HttpStatus.NOT_FOUND);
-        }
+        employeeService.deleteEmployee(employeeId);
+        return new ResponseEntity<>("Employee deleted successfully", HttpStatus.OK);
     }
 }

@@ -83,6 +83,12 @@ public class EntityDtoMapper {
                 .map(this::mapEmployeeToDtoWithPositionAndDepartment)
                 .collect(Collectors.toList());
     }
+    // Employee DTO list
+    public List<AttendanceDto> mapAttendanceToDtoList(List<Attendance> attendances) {
+        return attendances.stream()
+                .map(this::mapAttendanceToDto)
+                .collect(Collectors.toList());
+    }
 
     // Position DTO list
     public List<PositionDto> mapPositionsToDtoList(List<Position> positions) {
@@ -159,4 +165,55 @@ public class EntityDtoMapper {
         employeeSchedule.setDayOfWeek(employeeScheduleDto.getDayOfWeek());
         return employeeSchedule;
     }
+
+    // Attendance entity to Attendance DTO
+    public AttendanceDto mapAttendanceToDto(Attendance attendance) {
+        AttendanceDto dto = new AttendanceDto();
+        dto.setAttendanceId(attendance.getAttendanceId());
+        dto.setClockIn(attendance.getClockIn());
+        dto.setClockOut(attendance.getClockOut());
+        dto.setStatus(AttendanceDto.AttendanceStatus.valueOf(attendance.getStatus().name()));
+
+        // Map associated Employee
+        if (attendance.getEmployee() != null) {
+            dto.setEmployee(mapEmployeeToDtoBasic(attendance.getEmployee()));
+        }
+
+        // Map associated Schedule
+        if (attendance.getSchedule() != null) {
+            ScheduleDto scheduleDto = new ScheduleDto();
+            scheduleDto.setScheduleId(attendance.getSchedule().getScheduleId());
+            scheduleDto.setShiftStart(attendance.getSchedule().getShiftStart());
+            scheduleDto.setShiftEnd(attendance.getSchedule().getShiftEnd());
+            dto.setSchedule(scheduleDto);
+        }
+
+        return dto;
+    }
+
+    // Attendance DTO to Attendance entity
+    public Attendance mapAttendanceDtoToEntity(AttendanceDto dto) {
+        Attendance attendance = new Attendance();
+        attendance.setAttendanceId(dto.getAttendanceId());
+        attendance.setClockIn(dto.getClockIn());
+        attendance.setClockOut(dto.getClockOut());
+        attendance.setStatus(Attendance.AttendanceStatus.valueOf(dto.getStatus().name()));
+
+        // Map associated Employee
+        if (dto.getEmployee() != null) {
+            Employee employee = new Employee();
+            employee.setEmployeeId(dto.getEmployee().getEmployeeId().intValue());
+            attendance.setEmployee(employee);
+        }
+
+        // Map associated Schedule
+        if (dto.getSchedule() != null) {
+            Schedule schedule = new Schedule();
+            schedule.setScheduleId(dto.getSchedule().getScheduleId());
+            attendance.setSchedule(schedule);
+        }
+
+        return attendance;
+    }
+
 }
