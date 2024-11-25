@@ -225,4 +225,5 @@ public class EntityDtoMapper {
                 .map(this::mapAttendanceToDto)
                 .collect(Collectors.toList());
     }
+
 }
