@@ -16,6 +16,8 @@ public class UserDto {
 
     @Getter @Setter
     private User.UserRole role;
+
+    @Getter @Setter
     private EmployeeDto employee;
 
     public enum UserRole {
