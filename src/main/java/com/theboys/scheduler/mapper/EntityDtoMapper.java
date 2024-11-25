@@ -17,7 +17,7 @@ public class EntityDtoMapper {
     // Employee entity to Employee DTO (basic information)
     public EmployeeDto mapEmployeeToDtoBasic(Employee employee) {
         EmployeeDto employeeDto = new EmployeeDto();
-        employeeDto.setEmployeeId((long) employee.getEmployeeId());
+        employeeDto.setEmployeeId(employee.getEmployeeId());
         employeeDto.setFirstName(employee.getFirstName());
         employeeDto.setLastName(employee.getLastName());
         employeeDto.setEmail(employee.getEmail());
@@ -54,7 +54,7 @@ public class EntityDtoMapper {
     // Employee DTO to Employee entity
     public Employee mapEmployeeDtoToEntity(EmployeeDto employeeDto) {
         Employee employee = new Employee();
-        employee.setEmployeeId(employeeDto.getEmployeeId().intValue());
+        employee.setEmployeeId(employeeDto.getEmployeeId());
         employee.setFirstName(employeeDto.getFirstName());
         employee.setLastName(employeeDto.getLastName());
         employee.setEmail(employeeDto.getEmail());
@@ -207,7 +207,7 @@ public class EntityDtoMapper {
 
         if (dto.getEmployee() != null) {
             Employee employee = new Employee();
-            employee.setEmployeeId(dto.getEmployee().getEmployeeId().intValue());
+            employee.setEmployeeId(dto.getEmployee().getEmployeeId());
             attendance.setEmployee(employee);
         }
         if (dto.getSchedule() != null) {
