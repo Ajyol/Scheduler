@@ -282,5 +282,42 @@ public class EntityDtoMapper {
                 .collect(Collectors.toList());
     }
 
+    // -----------------------------------------------
+    // User Mappings
+    // -----------------------------------------------
 
+    // User entity to User DTO
+    public UserDto mapUserToDto(User user) {
+        UserDto dto = new UserDto();
+        dto.setUserId(user.getUserId());
+        dto.setUsername(user.getUsername());
+        dto.setPassword(user.getPassword());
+        dto.setRole(user.getRole());
+
+        if (user.getEmployee() != null) {
+            dto.setEmployee(mapEmployeeToDtoBasic(user.getEmployee()));
+        }
+        return dto;
+    }
+
+    // User DTO to User entity
+    public User mapUserDtoToEntity(UserDto dto) {
+        User user = new User();
+        user.setUserId(dto.getUserId());
+        user.setUsername(dto.getUsername());
+        user.setPassword(dto.getPassword());
+        user.setRole(dto.getRole());
+
+        if (dto.getEmployee() != null) {
+            user.setEmployee(mapEmployeeDtoToEntity(dto.getEmployee()));
+        }
+        return user;
+    }
+
+    //User DTO list
+    public List<UserDto> mapUserToDtoList(List<User> users) {
+        return users.stream()
+                .map(this::mapUserToDto)
+                .collect(Collectors.toList());
+    }
 }
