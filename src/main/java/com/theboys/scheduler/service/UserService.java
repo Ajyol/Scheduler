@@ -5,15 +5,19 @@ import com.theboys.scheduler.dto.UserDto;
 import com.theboys.scheduler.entity.User;
 import com.theboys.scheduler.exception.UserNotFoundException;
 import com.theboys.scheduler.mapper.EntityDtoMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class UserService implements IUserService{
 
     private final EntityDtoMapper entityDtoMapper;
     private final UserRepository userRepository;
 
+    @Autowired
     public UserService(EntityDtoMapper entityDtoMapper, UserRepository userRepository) {
         this.entityDtoMapper = entityDtoMapper;
         this.userRepository = userRepository;
