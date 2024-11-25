@@ -5,15 +5,19 @@ import com.theboys.scheduler.dto.ScheduleDto;
 import com.theboys.scheduler.entity.Schedule;
 import com.theboys.scheduler.exception.ScheduleNotFoundException;
 import com.theboys.scheduler.mapper.EntityDtoMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class ScheduleService implements IScheduleService{
 
     private final EntityDtoMapper entityDtoMapper;
     private final ScheduleRepository scheduleRepository;
 
+    @Autowired
     public ScheduleService(EntityDtoMapper entityDtoMapper, ScheduleRepository scheduleRepository) {
         this.entityDtoMapper = entityDtoMapper;
         this.scheduleRepository = scheduleRepository;

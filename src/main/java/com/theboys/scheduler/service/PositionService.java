@@ -5,6 +5,7 @@ import com.theboys.scheduler.dto.PositionDto;
 import com.theboys.scheduler.entity.Position;
 import com.theboys.scheduler.exception.PositionNotFoundException;
 import com.theboys.scheduler.mapper.EntityDtoMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +16,7 @@ public class PositionService implements IPositionService{
     private final PositionRepository positionRepository;
     private final EntityDtoMapper entityDtoMapper;
 
+    @Autowired
     public PositionService(PositionRepository positionRepository, EntityDtoMapper entityDtoMapper) {
         this.positionRepository = positionRepository;
         this.entityDtoMapper = entityDtoMapper;

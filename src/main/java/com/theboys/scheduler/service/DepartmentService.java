@@ -5,6 +5,7 @@ import com.theboys.scheduler.dto.DepartmentDto;
 import com.theboys.scheduler.entity.Department;
 import com.theboys.scheduler.exception.DepartmentNotFoundException;
 import com.theboys.scheduler.mapper.EntityDtoMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +17,7 @@ public class DepartmentService implements IDepartmentService {
     private final DepartmentRepository departmentRepository;
     private final EntityDtoMapper entityDtoMapper;
 
+    @Autowired
     public DepartmentService(DepartmentRepository departmentRepository, EntityDtoMapper entityDtoMapper) {
         this.departmentRepository = departmentRepository;
         this.entityDtoMapper = entityDtoMapper;
