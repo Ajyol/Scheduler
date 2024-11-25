@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class EmployeeDto {
 
-    private Long employeeId;
+    private int employeeId;
     private String firstName;
     private String lastName;
     private String email;
@@ -32,15 +32,15 @@ public class EmployeeDto {
     private String departmentDescription;
 
     public enum EmployeeStatus {
-        ACTIVE, INACTIVE, ON_LEAVE
+        ACTIVE, INACTIVE, TERMINATED
     }
 
     // Getters and Setters
-    public Long getEmployeeId() {
+    public int getEmployeeId() {
         return employeeId;
     }
 
-    public void setEmployeeId(Long employeeId) {
+    public void setEmployeeId(int employeeId) {
         this.employeeId = employeeId;
     }
 

@@ -3,7 +3,6 @@ package com.theboys.scheduler.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.theboys.scheduler.entity.Employee;
-import com.theboys.scheduler.entity.Schedule;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -31,7 +30,7 @@ public class ScheduleDto {
     private LocalTime shiftEnd;
 
     @Getter @Setter
-    private Schedule.ScheduleStatus status;
+    private ScheduleStatus status;
 
     public enum ScheduleStatus {
         SCHEDULED, COMPLETED, CANCELLED
