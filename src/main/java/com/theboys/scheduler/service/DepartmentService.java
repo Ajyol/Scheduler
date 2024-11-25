@@ -5,10 +5,12 @@ import com.theboys.scheduler.dto.DepartmentDto;
 import com.theboys.scheduler.entity.Department;
 import com.theboys.scheduler.exception.DepartmentNotFoundException;
 import com.theboys.scheduler.mapper.EntityDtoMapper;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class DepartmentService implements IDepartmentService {
 
     private final DepartmentRepository departmentRepository;

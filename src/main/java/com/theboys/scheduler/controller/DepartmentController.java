@@ -2,6 +2,7 @@ package com.theboys.scheduler.controller;
 
 import com.theboys.scheduler.dto.DepartmentDto;
 import com.theboys.scheduler.service.DepartmentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import java.util.List;
 public class DepartmentController {
     private final DepartmentService departmentService;
 
+    @Autowired
     public DepartmentController(DepartmentService departmentService) {
         this.departmentService = departmentService;
     }
@@ -34,7 +36,7 @@ public class DepartmentController {
         return new ResponseEntity<>(savedDepartment, HttpStatus.CREATED);
     }
 
-    @PostMapping("/departments")
+    @PutMapping("/departments")
     public ResponseEntity<DepartmentDto> updateDepartment(@RequestBody DepartmentDto departmentDto) {
         DepartmentDto updatedDepartment = departmentService.save(departmentDto);
         return new ResponseEntity<>(updatedDepartment, HttpStatus.OK);
