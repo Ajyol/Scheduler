@@ -226,4 +226,61 @@ public class EntityDtoMapper {
                 .collect(Collectors.toList());
     }
 
+    // -----------------------------------------------
+// Schedule Mappings
+// -----------------------------------------------
+
+    // Schedule entity to Schedule DTO
+    public ScheduleDto mapScheduleToDto(Schedule schedule) {
+        ScheduleDto dto = new ScheduleDto();
+        dto.setScheduleId(schedule.getScheduleId());
+        dto.setShiftDate(schedule.getShiftDate());
+        dto.setShiftStart(schedule.getShiftStart());
+        dto.setShiftEnd(schedule.getShiftEnd());
+
+        // Convert ScheduleStatus from entity to DTO
+        dto.setStatus(ScheduleDto.ScheduleStatus.valueOf(schedule.getStatus().name()));
+
+        // Map Employee entity to Employee field in DTO
+        if (schedule.getEmployee() != null) {
+            Employee employee = schedule.getEmployee();
+            Employee employeeDto = new Employee();
+            employeeDto.setEmployeeId(employee.getEmployeeId());
+            employeeDto.setFirstName(employee.getFirstName());
+            employeeDto.setLastName(employee.getLastName());
+            dto.setEmployee(employeeDto);
+        }
+
+        return dto;
+    }
+
+    // Schedule DTO to Schedule entity
+    public Schedule mapScheduleDtoToEntity(ScheduleDto dto) {
+        Schedule schedule = new Schedule();
+        schedule.setScheduleId(dto.getScheduleId());
+        schedule.setShiftDate(dto.getShiftDate());
+        schedule.setShiftStart(dto.getShiftStart());
+        schedule.setShiftEnd(dto.getShiftEnd());
+
+        // Convert ScheduleStatus from DTO to entity
+        schedule.setStatus(Schedule.ScheduleStatus.valueOf(dto.getStatus().name()));
+
+        // Map Employee DTO to Employee field in entity
+        if (dto.getEmployee() != null) {
+            Employee employee = new Employee();
+            employee.setEmployeeId(dto.getEmployee().getEmployeeId());
+            schedule.setEmployee(employee);
+        }
+
+        return schedule;
+    }
+
+    // Schedule DTO list mapping
+    public List<ScheduleDto> mapScheduleToDtoList(List<Schedule> schedules) {
+        return schedules.stream()
+                .map(this::mapScheduleToDto)
+                .collect(Collectors.toList());
+    }
+
+
 }
