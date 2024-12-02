@@ -1,16 +1,12 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import HomePage from '../components/home-page';
-import LoginPage from '../components/login-page';
+import { Routes, Route } from "react-router-dom";
+import EmployeeDashboard from "../components/EmployeeDashboard"; 
 
-function App() {
+function AppRoutes() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<LoginPage />} />
-      </Routes>
-    </Router>
+    <Routes>
+      <Route path="/employees" element={<EmployeeDashboard />} /> {/* Employee Dashboard route */}
+    </Routes>
   );
 }
 
-export default App;
+export default AppRoutes;
