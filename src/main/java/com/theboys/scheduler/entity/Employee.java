@@ -9,7 +9,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.time.LocalDate;
 
 @Data
@@ -53,12 +52,11 @@ public class Employee {
     @Column(name = "hire_date", nullable = false)
     private LocalDate hireDate;
 
-    // Relationship with Position and Department entities
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)  // changed from LAZY to EAGER for simplicity
     @JoinColumn(name = "position_id", nullable = false)
     private Position position;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)  // changed from LAZY to EAGER for simplicity
     @JoinColumn(name = "department_id", nullable = false)
     private Department department;
 
@@ -66,7 +64,6 @@ public class Employee {
     @Column(name = "status", nullable = false)
     private EmployeeStatus status;
 
-    // Enum to represent status
     public enum EmployeeStatus {
         ACTIVE, INACTIVE, TERMINATED
     }

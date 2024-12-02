@@ -5,6 +5,7 @@ import com.theboys.scheduler.entity.*;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -73,9 +74,13 @@ public class EntityDtoMapper {
             employee.setDepartment(department);
         }
 
-        employee.setStatus(Employee.EmployeeStatus.valueOf(employeeDto.getStatus().name()));
+        employee.setStatus(Optional.ofNullable(employeeDto.getStatus())
+                .map(status -> Employee.EmployeeStatus.valueOf(status.name()))
+                .orElse(Employee.EmployeeStatus.INACTIVE));
+
         return employee;
     }
+
 
     // Employee DTO list
     public List<EmployeeDto> mapEmployeesToDtoList(List<Employee> employees) {
